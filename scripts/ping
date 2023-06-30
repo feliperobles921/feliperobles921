@@ -1,0 +1,11 @@
+$hosts = Get-Content "D:\SCRIPTS\ping\hosts.txt"
+$outputFile = "D:\SCRIPTS\ping\ips2.txt"
+
+foreach ($hostname in $hosts) {
+    $ip = Test-Connection -ComputerName $hostname -Count 1 -ErrorAction SilentlyContinue | Select-Object -ExpandProperty IPV4Address
+
+    if ($ip) {
+        $output = "$hostname $ip"
+        Add-Content -Path $outputFile -Value $output
+    }
+}
